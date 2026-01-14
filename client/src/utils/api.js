@@ -22,59 +22,59 @@ const fetchWithCredentials = async (url, options = {}) => {
 // Auth API
 export const authAPI = {
   register: (userData) =>
-    fetchWithCredentials(`${API_URL}/auth/register`, {
+    fetchWithCredentials(`/auth/register`, {
       method: "POST",
       body: JSON.stringify(userData),
     }),
 
   login: (credentials) =>
-    fetchWithCredentials(`${API_URL}/auth/login`, {
+    fetchWithCredentials(`/auth/login`, {
       method: "POST",
       body: JSON.stringify(credentials),
     }),
 
   logout: () =>
-    fetchWithCredentials(`${API_URL}/auth/logout`, {
+    fetchWithCredentials(`/auth/logout`, {
       method: "POST",
     }),
 
-  getMe: () => fetchWithCredentials(`${API_URL}/auth/me`),
+  getMe: () => fetchWithCredentials(`/auth/me`),
 };
 
 // Gigs API
 export const gigsAPI = {
   getAll: (search = "") => {
     const url = search
-      ? `${API_URL}/gigs?search=${encodeURIComponent(search)}`
-      : `${API_URL}/gigs`;
+      ? `/gigs?search=${encodeURIComponent(search)}`
+      : `/gigs`;
     return fetchWithCredentials(url);
   },
 
-  getById: (id) => fetchWithCredentials(`${API_URL}/gigs/${id}`),
+  getById: (id) => fetchWithCredentials(`/gigs/${id}`),
 
   create: (gigData) =>
-    fetchWithCredentials(`${API_URL}/gigs`, {
+    fetchWithCredentials(`/gigs`, {
       method: "POST",
       body: JSON.stringify(gigData),
     }),
 
-  getMyGigs: () => fetchWithCredentials(`${API_URL}/gigs/my-gigs`),
+  getMyGigs: () => fetchWithCredentials(`/gigs/my-gigs`),
 };
 
 // Bids API
 export const bidsAPI = {
   submit: (bidData) =>
-    fetchWithCredentials(`${API_URL}/bids`, {
+    fetchWithCredentials(`/bids`, {
       method: "POST",
       body: JSON.stringify(bidData),
     }),
 
-  getByGigId: (gigId) => fetchWithCredentials(`${API_URL}/bids/${gigId}`),
+  getByGigId: (gigId) => fetchWithCredentials(`/bids/${gigId}`),
 
-  getMyBids: () => fetchWithCredentials(`${API_URL}/bids/my-bids/all`),
+  getMyBids: () => fetchWithCredentials(`/bids/my-bids/all`),
 
   hire: (bidId) =>
-    fetchWithCredentials(`${API_URL}/bids/${bidId}/hire`, {
+    fetchWithCredentials(`/bids/${bidId}/hire`, {
       method: "PATCH",
     }),
 };
