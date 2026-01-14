@@ -1,11 +1,11 @@
-const API_URL = 'http://localhost:8000/api';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchWithCredentials = async (url, options = {}) => {
   const response = await fetch(url, {
     ...options,
-    credentials: 'include',
+    credentials: "include",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...options.headers,
     },
   });
@@ -13,7 +13,7 @@ const fetchWithCredentials = async (url, options = {}) => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || 'Something went wrong');
+    throw new Error(data.message || "Something went wrong");
   }
 
   return data;
@@ -21,43 +21,43 @@ const fetchWithCredentials = async (url, options = {}) => {
 
 // Auth API
 export const authAPI = {
-  register: (userData) => 
+  register: (userData) =>
     fetchWithCredentials(`${API_URL}/auth/register`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(userData),
     }),
-  
+
   login: (credentials) =>
     fetchWithCredentials(`${API_URL}/auth/login`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(credentials),
     }),
-  
+
   logout: () =>
     fetchWithCredentials(`${API_URL}/auth/logout`, {
-      method: 'POST',
+      method: "POST",
     }),
-  
+
   getMe: () => fetchWithCredentials(`${API_URL}/auth/me`),
 };
 
 // Gigs API
 export const gigsAPI = {
-  getAll: (search = '') => {
-    const url = search 
+  getAll: (search = "") => {
+    const url = search
       ? `${API_URL}/gigs?search=${encodeURIComponent(search)}`
       : `${API_URL}/gigs`;
     return fetchWithCredentials(url);
   },
-  
+
   getById: (id) => fetchWithCredentials(`${API_URL}/gigs/${id}`),
-  
+
   create: (gigData) =>
     fetchWithCredentials(`${API_URL}/gigs`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(gigData),
     }),
-  
+
   getMyGigs: () => fetchWithCredentials(`${API_URL}/gigs/my-gigs`),
 };
 
@@ -65,17 +65,17 @@ export const gigsAPI = {
 export const bidsAPI = {
   submit: (bidData) =>
     fetchWithCredentials(`${API_URL}/bids`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(bidData),
     }),
-  
+
   getByGigId: (gigId) => fetchWithCredentials(`${API_URL}/bids/${gigId}`),
-  
+
   getMyBids: () => fetchWithCredentials(`${API_URL}/bids/my-bids/all`),
-  
+
   hire: (bidId) =>
     fetchWithCredentials(`${API_URL}/bids/${bidId}/hire`, {
-      method: 'PATCH',
+      method: "PATCH",
     }),
 };
 
